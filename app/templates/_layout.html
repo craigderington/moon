@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+    {% block head %}
+    <head>
+        <meta charset="utf-8">
+        <title>{% block title %}moon: btc testnet3 faucet{% endblock %}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/cyborg/bootstrap.min.css" integrity="sha384-nEnU7Ae+3lD52AK+RGNzgieBWMnEfgTbRHIwEvp1XXPdqdO6uLTd/NwXbzboqjc2" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/custom.min.css') }}" />
+        {% block style %}
+        <style>
+            /* sticky footer */
+            footer {
+                position: fixed;
+                width: 100%;
+                bottom: 0;
+                box-sizing:border-box;
+            }
+
+            .navbar-nav {
+                flex-direction: row;
+            }
+
+            .nav-link {
+                padding-right: .5rem !important;
+                padding-left: .5rem !important;
+            }
+
+            /* fix right side placement */
+            .ml-auto .dropdown-menu {
+                left: auto !important;
+                right: 0px;
+            }
+        </style>
+        {% endblock %}
+    </head>
+    {% endblock %}
+    <body>
+    {% block navbar %}{% include "navbar.html" %}{% endblock %}
+
+    <div class="container">
+        
+        {% block pageheader %}
+        <div class="page-header" id="banner">
+            <div class="row">
+                <div class="col-lg-12 col-md-7 col-sm-6">
+                    <h4><i class="fa fa-moon-o"></i> moon</h4>
+                    <p class="lead">a testnet3 bitcoin faucet</p>
+                </div>
+            </div>
+        </div>
+        {% endblock %}
+        
+        {% block content %}
+        {% endblock %}
+
+        {% block footer %}
+        <footer id="footer">
+            <div class="row">
+                <div class="col-lg-12">
+                    <p>moon is made with <i class="fa fa-heart text-danger"></i> by <a href="">Dieter Heinreich Heimler</a>.</p>
+                    <p>moon code released under the <a href="">MIT License</a>.</p>
+                </div>
+            </div>
+        </footer>
+        {% endblock %}
+    </div><!-- // close main container -->
+    
+    {% block js %}
+    <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/custom.js') }}"></script>
+    {% endblock %}
+  </body>
+</html>

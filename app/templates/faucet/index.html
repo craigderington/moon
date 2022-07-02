@@ -1,0 +1,28 @@
+{% extends "_layout.html" %}
+
+{% block content %}
+
+    <div class="col-lg-12">
+        <div class="input-group input-group-lg mb-3">
+            <input type="text" class="form-control" placeholder="btc-testnet-address" aria-label="BTC Testnet3 Address" aria-describedby="button-addon2">
+            <button class="btn btn-outline-secondary" type="button" id="button-addon2"><i class="fa fa-cirlce-arrow-right"></i> Send</button>
+        </div>   
+
+        <fieldset class="form-group">
+            <legend class="mt-4">Radio buttons</legend>
+            <div class="form-check">
+                <label class="form-check-label">
+                    <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios1" value="option1" checked="">
+                    Option one is this and that—be sure to include why it's great
+                </label>
+            </div>
+            <div class="form-check">
+                <label class="form-check-label">
+                    <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios2" value="option2">
+                    Option two can be something else and selecting it will deselect option one
+                </label>
+            </div>
+        </fieldset>
+    </div>
+
+{% endblock %}
