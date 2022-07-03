@@ -8,6 +8,9 @@ from flask_pagedown.fields import PageDownField
 from app.auth.models import Role, User
 
 
+class FaucetRequestForm(Form):
+    address = StringField("Enter your tBTC Address", validators=[DataRequired()])
+
 class NameForm(Form):
     name = StringField('What is your name?', validators=[DataRequired()])
     submit = SubmitField('Submit')

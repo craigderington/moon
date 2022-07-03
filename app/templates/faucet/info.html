@@ -1,0 +1,51 @@
+{% extends "_layout.html" %}
+
+{% block pageheader %}
+    <div class="page-header" id="banner">
+        <div class="row">
+            <div class="col-lg-12 col-md-7 col-sm-6">
+                <h5><i class="fa fa-moon-o"></i> rpc server commands</h5>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block content %}
+    <div class="row">
+        <div class="col-lg-12">
+            <ul class="nav nav-pills">
+                <li class="nav-item">
+                <a class="nav-link active" href="{{ url_for('faucet.info') }}">getblockchaininfo</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" href="#">getblockcount</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" href="#">getbestblockhash</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('faucet.netinfo') }}">getnetworkinfo</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">getpeers</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="row mt-5">
+        <div class="col-lg-10">
+            <p class="lead">btc testnet3 rpc server response:</p>
+            <ul class="well well-lg" style="list-style:none;">
+                <li><i class="fa fa-signal"></i>  NETWORK: {{ blockchaininfo["chain"] }}</li>
+                <li><i class="fa fa-th"></i>  BLOCKS: {{ blockchaininfo["blocks"] }}</li>
+                <li><i class="fa fa-info-circle"></i>  HEADERS: {{ blockchaininfo["headers"] }}</li>
+                <li><i class="fa fa-th-list"></i>  BEST BLOCK HASH: {{ blockchaininfo["bestblockhash"] }}</li>
+                <li><i class="fa fa-question-circle"></i>  DIFFICULTY: {{ blockchaininfo["difficulty"] }}</li>
+                <li><i class="fa fa-clock-o"></i>  TIME: {{ blockchaininfo["time"]|unix_time }}</li>
+            </ul>
+        </div>
+    </div>
+
+{% endblock %}

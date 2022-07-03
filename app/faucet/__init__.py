@@ -1,7 +1,9 @@
 # main/__init__.py
 from flask import Blueprint
-faucet = Blueprint("faucet", __name__)
+from bitcoinlib.services.baseclient import BaseClient
 
+# faucet blueprint
+faucet = Blueprint("faucet", __name__)
 from . import views, errors
 from app.auth.models import Permission
 

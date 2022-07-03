@@ -10,6 +10,9 @@
                 <li class="">
                     <a class="nav-link {% if 'faucet' in request.path %}active{% endif %}" href="{{ url_for('faucet.index') }}"><i class="fa fa-rocket"></i> faucet</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('faucet.info') }}"><i class="fa fa-server"></i> rpc</a>
+                </li>
                 <li class="">
                     <a class="nav-link" href="#"><i class="fa fa-certificate"></i> about</a>
                 </li>

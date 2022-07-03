@@ -3,11 +3,20 @@
 {% block content %}
 
     <div class="col-lg-12">
-        <div class="input-group input-group-lg mb-3">
-            <input type="text" class="form-control" placeholder="btc-testnet-address" aria-label="BTC Testnet3 Address" aria-describedby="button-addon2">
-            <button class="btn btn-outline-secondary" type="button" id="button-addon2"><i class="fa fa-cirlce-arrow-right"></i> Send</button>
+        <div class="input-group-lg">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="validationTooltipAddressPrepend"><i class="fa fa-btc"></i></span>
+                <div class="input-group">
+                    <input name="to" value="" type="text" class="form-control" id="validationTooltipAddress" placeholder="bitcoin address, e.g. 2MsZQSzRirq6N6jjKkZQ9D5gpjdnjEvJnAy" aria-describedby="validationTooltipAddressPrepend" required="">
+                    <button class="btn btn-secondary-outline" type="button" id="send_tbtc"><i class="fa fa-arrow-circle-right"></i> Send tBTC</button>
+                </div>
+            </div>            
+            
+            <div class="invalid-tooltip">
+                <em>Please enter bitcoin address.</em>
+            </div>
         </div>   
-
+        <!---
         <fieldset class="form-group">
             <legend class="mt-4">Radio buttons</legend>
             <div class="form-check">
@@ -23,6 +32,7 @@
                 </label>
             </div>
         </fieldset>
+        --->
     </div>
 
 {% endblock %}
