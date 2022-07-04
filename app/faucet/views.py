@@ -16,7 +16,9 @@ from datetime import datetime, timedelta
 
 @faucet.route("/", methods=["GET", "POST"])
 def index():
+    user_addr = request.remote_addr
     form = FaucetRequestForm()
+    current_app.logger.info("Loaded the faucet homepage for: {}".format(user_addr))
     return render_template(
         "faucet/index.html",
         form=form

@@ -9,6 +9,8 @@ from flask_pagedown import PageDown
 from celery import Celery
 from config import config, Config
 from dotenv import load_dotenv
+from logging.config import dictConfig
+import logger
 
 # configure services
 bootstrap = Bootstrap()
@@ -25,6 +27,9 @@ login_manager.login_view = "auth.login"
 
 # load dotenv
 load_dotenv(".env")
+
+# logging
+dictConfig(logger.LOGGING_CONFIG)
 
 
 def create_app(config_name):
