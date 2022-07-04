@@ -5,7 +5,8 @@
 3. Service Provider & RPC Server Connection
 4. Database Setup
 5. Environment
-6. Running the Server
+6. Redis
+7. Running the Server
 
 
 
@@ -112,10 +113,20 @@ FLASK_CONFIG=development
 MAIL_USERNAME=""
 MAIL_PASSWORD=""
 MAIL_DEFAULT_SENDER="<sender@address>"
-VALVE_DATABASE_PASSWORD=""
 BITCOINLIB_DATABASE_PASSWORD=""
+BITCOINLIB_RPC_SERVER_USERNAME=""
 BITCOINLIB_RPC_SERVER_PASSWORD=""
 ```
+
+
+### Redis
+Make sure ```redis-server``` is running on the host and is accessible at...
+
+```
+redis://localhost:6379/0
+```
+
+Moon uses a redis cache to store and retrieve remote client IP addresses and user-agents to help fight against bots spamming the faucet request form; rather than implement an unfriendly captcha solver. A bot detection service may be required in the future.
 
 ## Running the Server
 
