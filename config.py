@@ -35,6 +35,8 @@ class Config:
         "@localhost:3306/bitcoinlib"
     BITCOINLIB_RPC_SERVER = "http://" + BITCOINLIB_RPC_AUTH + "@127.0.0.1:18332"
 
+    # json
+    JSONIFY_PRETTYPRINT_REGULAR = True
 
     @staticmethod
     def init_app(app):

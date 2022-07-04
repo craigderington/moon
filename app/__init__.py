@@ -5,7 +5,7 @@ from flask_mail import Mail
 from flask_moment import Moment
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
-from flask_pagedown import PageDown
+from markdown import Markdown
 from celery import Celery
 from config import config, Config
 from dotenv import load_dotenv
@@ -17,7 +17,6 @@ bootstrap = Bootstrap()
 mail = Mail()
 moment = Moment()
 db = SQLAlchemy()
-pagedown = PageDown()
 celery = Celery(__name__, broker=Config.CELERY_BROKER_URL)
 
 # flask login
@@ -42,7 +41,6 @@ def create_app(config_name):
     moment.init_app(app)
     db.init_app(app)
     login_manager.init_app(app)
-    pagedown.init_app(app)
     celery.conf.update(app.config)
 
     if not app.debug and not app.testing and not app.config["SSL_DISABLE"]:

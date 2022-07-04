@@ -1,7 +1,7 @@
 # main/views/py
 from asyncio.log import logger
 from flask import render_template, redirect, url_for, abort, flash, request,\
-    current_app, make_response
+    current_app, make_response, jsonify
 from flask_login import login_required, current_user
 from flask_sqlalchemy import get_debug_queries
 from . import faucet
@@ -13,13 +13,15 @@ from bitcoinlib.services.baseclient import BaseClient
 from bitcoinlib.services.baseclient import ClientError as rpc_client_error
 from datetime import datetime, timedelta
 import json
+import markdown
+
 
 @faucet.route("/", methods=["GET", "POST"])
 def index():
     user_addr = request.remote_addr
     form = FaucetRequestForm()
     current_app.logger.info("Loaded the faucet homepage for: {}".format(user_addr))
-    transactions = make_rpc_request('{"jsonrpc": "1.0","id": "curltext","method":"listtransactions","params": []}')
+    transactions = rpc_server_command("listtransactions") or None
     if transactions:
         transactions = sorted(transactions, key=lambda t: t["time"], reverse=True)
 
@@ -31,17 +33,47 @@ def index():
     )
 
 
-@faucet.route("/netinfo", methods=["GET"])
-def netinfo():
+@faucet.route("/<path:path>")
+def rpc_server(path):
+    user_addr = request.remote_addr
     context = {}
-    netinfo = make_rpc_request('{"jsonrpc": "1.0","id": "curltext","method":"getnetworkinfo","params": []}')
-    
+    resp = rpc_server_command(path) or None
     return render_template(
-        "faucet/netinfo.html",
-        context=context,
-        today=datetime.now().strftime("%c"),
-        netinfo=netinfo
+        "faucet/server.html",
+        context=resp,
+        addr=user_addr,
+        path=path,
+        today=datetime.now().strftime("%c")
     )
+
+
+def rpc_server_command(command):
+    rpc_commands = {
+        "getblockcount": "getblockcount",
+        "getbestblockhash": "getbestblockhash",
+        "getblockchaininfo": "getblockchaininfo",
+        "getmempoolinfo": "getmempoolinfo",
+        "getpeerinfo": "getpeerinfo",
+        "getnetworkinfo": "getnetworkinfo",
+        "listtransactions": "listtransactions",
+        "getdifficulty": "getdifficulty",
+        "getnettotals": "getnettotals",
+        "getmininginfo": "getmininginfo",
+        "getbalance": "getbalance",
+        "getbalances": "getbalances",
+        "getconnectioncount": "getconnectioncount"
+    }
+
+    try:
+        cmd = rpc_commands[command] or "getblockcount"
+        cmd = '{"jsonrpc": "1.0","id": "curltext","method":' + '"' + cmd + '"' + ', "params": []}'
+        resp = make_rpc_request(cmd)
+    except KeyError as err:
+        flash("Sorry, there are no RPC commands mathcing the path:{}".format(str(err)), "danger")
+        cmd = "getblockcount"
+        cmd = '{"jsonrpc": "1.0","id": "curltext","method":' + '"' + cmd + '"' + ', "params": []}'
+        resp = make_rpc_request(cmd)
+    return resp
 
 
 def create_base_rpc_client():
