@@ -10,7 +10,7 @@
 
 
 ## Installation
-<p>Start by [cloning this repository](https://github.com/craigderington/moon.git) into your project directory.</p>
+Start by [cloning this repository](https://github.com/craigderington/moon.git) into your project directory.
 
 ```
 ubuntu:$ git clone https://github.com/craigderington/moon.git
@@ -39,7 +39,7 @@ and data/providers.json
     "network": "bitcoinlib_test",
     "client_class": "BitcoinLibTestClient",
     "provider_coin_id": "",
-    "url": "http://rpc-server-user:rpc-server-pass@127.0.0.1:18332",
+    "url": "http://rpc-server-user:rpc-server-password@127.0.0.1:18332",
     "api_key": "",
     "priority": 10,
     "denominator": 100000000,
@@ -54,13 +54,13 @@ Our connection to the Bitcoin Testnet3 RPC Server is dependent on a successful R
 I recommend testing your RPC Server connection before running the web server for the first time.  In your console, run curl to make sure you can connect to the service.
 
 ```
-(venv)ubuntu:~/projects/moon$ curl --data-binary '{"jsonrpc": "1.0", "id": "crltext", "method":"listtransactions", "params": []}' -H "Content-Type: text/plain" http://rpc-server-username:rpc-server=password@127.0.0.1:18332
+(venv)ubuntu:~/projects/moon$ curl --data-binary '{"jsonrpc": "1.0", "id": "crltext", "method":"listtransactions", "params": []}' -H "Content-Type: text/plain" http://rpc-server-username:rpc-server-password@127.0.0.1:18332
 ... {json-response} ...
 ```
 
 Since Bitcoin Core RPC Server only allows connections from the localhost, I recommend running the testnet server on one instance and configuring a SSH Tunnel on the machine running the moon faucet web server.
 
-This can be accomlished by creating a tunnel to the testnet machine.
+This can be accomplished by creating a tunnel to the testnet machine.
 
 ```
 (venv)ubuntu:~/projects/moon$ ssh -L -fn localhost:18333:localhost:18332 ubuntu@host
