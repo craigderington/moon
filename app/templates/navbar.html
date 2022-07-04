@@ -11,7 +11,7 @@
                     <a class="nav-link {% if 'faucet' in request.path %}active{% endif %}" href="{{ url_for('faucet.index') }}"><i class="fa fa-rocket"></i> faucet</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('faucet.info') }}"><i class="fa fa-server"></i> rpc</a>
+                    <a class="nav-link" href="{{ url_for('faucet.index') }}"><i class="fa fa-server"></i> rpc</a>
                 </li>
                 <li class="">
                     <a class="nav-link" href="#"><i class="fa fa-certificate"></i> about</a>
@@ -29,7 +29,7 @@
                     <div class="dropdown-menu" aria-labelledby="networks">
                         <a class="dropdown-item" href="#"><i class="fa fa-th-list"></i> mainnet</a>
                         <a class="dropdown-item" href="#"><i class="fa fa-list"></i> staging</a>
-                        <a class="dropdown-item" href=""><i class="fa fa-sign-in"></i> login</a>
+                        <a class="dropdown-item" href="{{ url_for('auth.login') }}"><i class="fa fa-sign-in"></i> login</a>
                     </div>
                 </li>
             </ul>

@@ -1,38 +1,44 @@
 {% extends "_layout.html" %}
 
 {% block content %}
-
-    <div class="col-lg-12">
-        <div class="input-group-lg">
-            <div class="input-group-prepend">
-                <span class="input-group-text" id="validationTooltipAddressPrepend"><i class="fa fa-btc"></i></span>
-                <div class="input-group">
-                    <input name="to" value="" type="text" class="form-control" id="validationTooltipAddress" placeholder="bitcoin address, e.g. 2MsZQSzRirq6N6jjKkZQ9D5gpjdnjEvJnAy" aria-describedby="validationTooltipAddressPrepend" required="">
-                    <button class="btn btn-outline-warning" type="button" id="send_tbtc"><i class="fa fa-arrow-circle-right"></i> Send tBTC</button>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="input-group-lg">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="validationTooltipAddressPrepend"><i class="fa fa-btc"></i></span>
+                    <div class="input-group">
+                        <input name="to" value="" type="text" class="form-control" id="validationTooltipAddress" placeholder="bitcoin address, e.g. 2MsZQSzRirq6N6jjKkZQ9D5gpjdnjEvJnAy" aria-describedby="validationTooltipAddressPrepend" required="">
+                        <button class="btn btn-outline-warning" type="button" id="send_tbtc"><i class="fa fa-arrow-circle-right"></i> Send tBTC</button>
+                    </div>
+                </div>            
+                
+                <div class="invalid-tooltip">
+                    <em>Please enter bitcoin address.</em>
                 </div>
-            </div>            
-            
-            <div class="invalid-tooltip">
-                <em>Please enter bitcoin address.</em>
             </div>
-        </div>   
-        <!---
-        <fieldset class="form-group">
-            <legend class="mt-4">Radio buttons</legend>
-            <div class="form-check">
-                <label class="form-check-label">
-                    <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios1" value="option1" checked="">
-                    Option one is this and that—be sure to include why it's great
-                </label>
-            </div>
-            <div class="form-check">
-                <label class="form-check-label">
-                    <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios2" value="option2">
-                    Option two can be something else and selecting it will deselect option one
-                </label>
-            </div>
-        </fieldset>
-        --->
+        </div>
     </div>
+    {% if transactions %}
+    <div class="row mt-5">
+        <div class="col-lg-12">
+            <h6 class="mb-3"><i class="fa fa-check-circle"></i> <em>Latest Transactions</em></h6>
+            {% for transaction in transactions %}
+            <div class="{% if transaction.category == 'receive' %}card border-dark {% else %}card text-white bg-primary{% endif %} mb-3">
+                <div class="card-header">TX ID: {{ transaction.txid }} <span class="float-right"><i class="fa fa-clock-o"></i> {{ transaction.time|unix_time }}</span></div>
+                <div class="card-body">
+                    <h5 class="card-text">{{ transaction.address }}<span class="float-right"><em>{% if transaction.category == "receive" %}+ {% endif %}{{ transaction.amount }}</em></span></h5>
+                    <p class="card-text muted-text"><span class="badge badge-danger p-2">{{ transaction.confirmations }} confirmations</span>
+                    {% if transaction.confirmations > 0 %}
+                    <span class="float-right badge badge-primary p-2"><i class="fa fa-check-square"></i> Block: {{ transaction.blockheight }}</span>
+                    {% endif %}
+                    </p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+
+
 
 {% endblock %}

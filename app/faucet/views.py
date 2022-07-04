@@ -12,29 +12,22 @@ from ..decorators import admin_required, permission_required
 from bitcoinlib.services.baseclient import BaseClient
 from bitcoinlib.services.baseclient import ClientError as rpc_client_error
 from datetime import datetime, timedelta
-
+import json
 
 @faucet.route("/", methods=["GET", "POST"])
 def index():
     user_addr = request.remote_addr
     form = FaucetRequestForm()
     current_app.logger.info("Loaded the faucet homepage for: {}".format(user_addr))
+    transactions = make_rpc_request('{"jsonrpc": "1.0","id": "curltext","method":"listtransactions","params": []}')
+    if transactions:
+        transactions = sorted(transactions, key=lambda t: t["time"], reverse=True)
+
     return render_template(
         "faucet/index.html",
-        form=form
-    )
-
-
-@faucet.route("/info", methods=["GET"])
-def info():
-    context = {}
-    blockchaininfo = make_rpc_request('{"jsonrpc": "1.0","id": "curltext","method":"getblockchaininfo","params": []}')
-    
-    return render_template(
-        "faucet/info.html",
-        context=context,
+        form=form,
+        transactions=transactions,
         today=datetime.now().strftime("%c"),
-        blockchaininfo=blockchaininfo
     )
 
 
