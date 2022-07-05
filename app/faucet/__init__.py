@@ -3,7 +3,7 @@ from flask import Blueprint
 from bitcoinlib.services.baseclient import BaseClient
 
 # faucet blueprint
-faucet = Blueprint("faucet", __name__)
+faucet = Blueprint("faucet", __name__, template_folder="templates")
 from . import views, errors
 from app.auth.models import Permission
 

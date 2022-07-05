@@ -36,16 +36,16 @@
 </div>
 {% endblock %}
 
-
-
 {% block content %}
 
 <div class="row mt-5">    
-    <div class="card border-secondary mb-3">
+    <div class="card border-secondary mb-3" style="min-width: 100%;">
         <div class="card-header"><i class="fa fa-info-circle"></i> <strong>Command: </strong><em>{{ path }}</em><span class="float-right"><i class="fa fa-map-marker"></i> IP Logged As: {{ addr }}</span></div>
         <div class="card-body">
-          <p class="card-text">{{ context }}</p>
+          <p class="card-text">{% include "faucet/outfile.html" %}</p>
         </div>
     </div>    
 </div>
 {% endblock %}
+
+{% block footer %}{% endblock %}

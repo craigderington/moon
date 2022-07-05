@@ -13,8 +13,11 @@ from bitcoinlib.services.baseclient import BaseClient
 from bitcoinlib.services.baseclient import ClientError as rpc_client_error
 from datetime import datetime, timedelta
 import json
-import markdown
-
+import os
+from pygments import highlight
+from pygments.lexers import get_lexer_by_name
+from pygments.formatters import HtmlFormatter
+from config import basedir
 
 @faucet.route("/", methods=["GET", "POST"])
 def index():
@@ -36,11 +39,19 @@ def index():
 @faucet.route("/<path:path>")
 def rpc_server(path):
     user_addr = request.remote_addr
-    context = {}
+    result = {}
     resp = rpc_server_command(path) or None
+    code = json.dumps(resp, indent=4, sort_keys=True)
+    lexer = get_lexer_by_name("json", stripall=True)
+    formatter = HtmlFormatter(full=True, linenos=True, style="monokai", cssclass="codeblock")
+    
+    with open(os.path.join(basedir, "app/templates/faucet/outfile.html"), "w") as f1:
+        result = highlight(code, lexer, formatter, outfile=f1)
+
+
     return render_template(
         "faucet/server.html",
-        context=resp,
+        result=result,
         addr=user_addr,
         path=path,
         today=datetime.now().strftime("%c")
