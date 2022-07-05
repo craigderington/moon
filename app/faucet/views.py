@@ -25,7 +25,7 @@ def index():
     form = FaucetRequestForm()
     current_app.logger.info("Loaded the faucet homepage for: {}".format(user_addr))
     transactions = rpc_server_command("listtransactions") or None
-    if transactions:
+    if transactions is not None:
         transactions = sorted(transactions, key=lambda t: t["time"], reverse=True)
 
     return render_template(
@@ -48,7 +48,6 @@ def rpc_server(path):
     with open(os.path.join(basedir, "app/templates/faucet/outfile.html"), "w") as f1:
         result = highlight(code, lexer, formatter, outfile=f1)
 
-
     return render_template(
         "faucet/server.html",
         result=result,
@@ -59,31 +58,34 @@ def rpc_server(path):
 
 
 def rpc_server_command(command):
+    resp = None
     rpc_commands = {
-        "getblockcount": "getblockcount",
-        "getbestblockhash": "getbestblockhash",
-        "getblockchaininfo": "getblockchaininfo",
-        "getmempoolinfo": "getmempoolinfo",
-        "getpeerinfo": "getpeerinfo",
-        "getnetworkinfo": "getnetworkinfo",
-        "listtransactions": "listtransactions",
-        "getdifficulty": "getdifficulty",
-        "getnettotals": "getnettotals",
-        "getmininginfo": "getmininginfo",
-        "getbalance": "getbalance",
-        "getbalances": "getbalances",
-        "getconnectioncount": "getconnectioncount"
+        1: "getblockcount",
+        2: "getbestblockhash",
+        3: "getblockchaininfo",
+        4: "getmempoolinfo",
+        5: "getpeerinfo",
+        6: "getnetworkinfo",
+        7: "listtransactions",
+        8: "getdifficulty",
+        9: "getnettotals",
+        10: "getmininginfo",
+        11: "getbalance",
+        12: "getbalances",
+        13: "getconnectioncount"
     }
 
-    try:
-        cmd = rpc_commands[command] or "getblockcount"
-        cmd = '{"jsonrpc": "1.0","id": "curltext","method":' + '"' + cmd + '"' + ', "params": []}'
-        resp = make_rpc_request(cmd)
-    except KeyError as err:
-        flash("Sorry, there are no RPC commands mathcing the path:{}".format(str(err)), "danger")
-        cmd = "getblockcount"
-        cmd = '{"jsonrpc": "1.0","id": "curltext","method":' + '"' + cmd + '"' + ', "params": []}'
-        resp = make_rpc_request(cmd)
+    if command in rpc_commands.values():
+        try:
+            cmd = command or "getblockcount"
+            cmd = '{"jsonrpc": "1.0","id": "curltext","method":' + '"' + cmd + '"' + ', "params": []}'
+            resp = make_rpc_request(cmd)
+        except KeyError as err:
+            flash("Sorry, there are no RPC commands mathcing the path:{}".format(str(err)), "danger")
+            cmd = "getblockcount"
+            cmd = '{"jsonrpc": "1.0","id": "curltext","method":' + '"' + cmd + '"' + ', "params": []}'
+            resp = make_rpc_request(cmd)
+    
     return resp
 
 
