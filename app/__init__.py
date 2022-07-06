@@ -5,6 +5,7 @@ from flask_mail import Mail
 from flask_moment import Moment
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
+from flask_redis import FlaskRedis
 from markdown import Markdown
 from celery import Celery
 from config import config, Config
@@ -17,6 +18,7 @@ bootstrap = Bootstrap()
 mail = Mail()
 moment = Moment()
 db = SQLAlchemy()
+redis_client = FlaskRedis()
 celery = Celery(__name__, broker=Config.CELERY_BROKER_URL)
 
 # flask login
@@ -37,6 +39,7 @@ def create_app(config_name):
     config[config_name].init_app(app)
 
     bootstrap.init_app(app)
+    redis_client.init_app(app)
     mail.init_app(app)
     moment.init_app(app)
     db.init_app(app)

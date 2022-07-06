@@ -2,15 +2,15 @@
 from flask_wtf import Form
 from wtforms import StringField, TextAreaField, BooleanField, SelectField,\
     SubmitField
-from wtforms.validators import DataRequired, Length, Email, Regexp
+from wtforms.validators import DataRequired, InputRequired, Length, Email, Regexp, NumberRange
 from wtforms import ValidationError
 from flask_pagedown.fields import PageDownField
 from app.auth.models import Role, User
 
 
 class FaucetRequestForm(Form):
-    address = StringField("Enter your tBTC Address", validators=[DataRequired()])
-
+    send_to_address = StringField("Enter your tBTC Address", validators=[DataRequired()])
+    send_amount = StringField("Enter Request Amount", validators=[InputRequired(), NumberRange(0.001, 0.0005)])
 class NameForm(Form):
     name = StringField('What is your name?', validators=[DataRequired()])
     submit = SubmitField('Submit')

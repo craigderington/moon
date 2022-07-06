@@ -22,7 +22,7 @@ ubuntu:~/projects$ cd moon
 ubuntu:~/projects/moon$ virtualenv venv --python=python3.9
 ubuntu:~/projects/moon$ source venv/bin/activate
 (venv)ubuntu:~/projects/moon$ pip install -r requirements.txt
-... dependencies installed ...
+... python project dependencies installed ...
 ```
 
 ## bitcoinlib
@@ -66,7 +66,7 @@ I recommend testing your RPC Server connection before running the web server for
 
 ```
 (venv)ubuntu:~/projects/moon$ curl --data-binary '{"jsonrpc": "1.0", "id": "crltext", "method":"getblockchaininfo", "params": []}' -H "Content-Type: text/plain" http://rpc-server-username:rpc-server-password@127.0.0.1:18332
-... {json-response} ...
+... {json-server-response} ...
 ```
 
 Since Bitcoin Core RPC Server only allows connections from the localhost, I recommend running the testnet server on a separate instance and configuring a SSH tunnel from the moon faucet web server to the BTC Testnet3 Server.
@@ -81,7 +81,7 @@ When setting up this project using a SSH tunnel, make sure your RPC SERVER uses 
 
 
 ## Database Setup
-The bitcoinlib database must be created before using MySQL as the data provider.  The schema will be created at run time, however, we need to create he database and create a user with permission to read/write to the database.
+The bitcoinlib database must be created before using MySQL as the data provider.  The schema will be created at run time, however, we need to create the database and create a user with permission to read/write to the database.
 
 ```
 (venv)ubuntu:~/projects/moon$ mysql -u root -p
@@ -134,7 +134,7 @@ A bot detection redirect service may be required in the future.
 (venv)ubuntu:~/projects/moon$ flask run
 ```
 
-For background tasks and messaging functionality, in a separate console, fire up the Celery worker to execute the tasks async.
+For background tasks and messaging functionality, in a separate console, fire up the Celery worker to execute app tasks.
 
 ```
 (venv)ubuntu:~/projects/moon$ venv/bin/celery worker -A celery_worker.celery -l info -n worker%h -c 2

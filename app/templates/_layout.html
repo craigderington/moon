@@ -40,11 +40,12 @@
     {% block navbar %}{% include "navbar.html" %}{% endblock %}
 
     <div class="container">
-        
+        {% block messages %}{% include "messages.html" %}{% endblock %}
         {% block pageheader %}
         <div class="page-header" id="banner">
             <div class="row">
                 <div class="col-lg-12 col-md-7 col-sm-6">
+                    <span class="badge badge-secondary float-right p-3">Wallet Balance: <i class="fa fa-btc"></i> {{ balance }}</span>
                     <h4><i class="fa fa-moon-o"></i> moon</h4>
                     <p class="lead"><em>a testnet3 bitcoin faucet</em></p>
                 </div>

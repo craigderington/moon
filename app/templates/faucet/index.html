@@ -27,7 +27,7 @@
                 <div class="card-header">TX ID: {{ transaction.txid }} <span class="float-right"><i class="fa fa-clock-o"></i> {{ transaction.time|unix_time }}</span></div>
                 <div class="card-body">
                     <h5 class="card-text">{{ transaction.address }}<span class="float-right"><em>{% if transaction.category == "receive" %}+ {% endif %}{{ transaction.amount }}</em></span></h5>
-                    <p class="card-text muted-text"><span class="badge badge-danger p-2">{{ transaction.confirmations }} confirmations</span>
+                    <p class="card-text muted-text"><span class="badge badge-danger p-2"><i class="fa fa-check-circle"></i> {{ transaction.confirmations }} confirmations</span>
                     {% if transaction.confirmations > 0 %}
                     <span class="float-right badge badge-primary p-2"><i class="fa fa-check-square"></i> Block: {{ transaction.blockheight }}</span>
                     {% endif %}
