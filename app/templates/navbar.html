@@ -14,13 +14,13 @@
                     <a class="nav-link" href="{{ url_for('faucet.rpc_server', path='getblockchaininfo') }}"><i class="fa fa-server"></i> rpc</a>
                 </li>
                 <li class="">
-                    <a class="nav-link" href="#"><i class="fa fa-certificate"></i> about</a>
+                    <a class="nav-link" href="{{ url_for('frontend.about') }}"><i class="fa fa-certificate"></i> about</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#"><i class="fa fa-btc"></i> donate</a>
+                    <a class="nav-link" href="{{ url_for('frontend.donate') }}"><i class="fa fa-btc"></i> donate</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#"><i class="fa fa-question-circle"></i> help</a>
+                    <a class="nav-link" href="{{ url_for('frontend.help') }}"><i class="fa fa-question-circle"></i> help</a>
                 </li>
             </ul>
             <ul class="navbar-nav ml-auto">
